@@ -19,7 +19,7 @@ const HomePage = () => {
   return (
     <Container>
       <Wrapper>
-        <div className="w-1/3 absolute left-20 top-20 z-10 bg-white shadow-lg rounded-lg p-4">
+        <div className="w-80 md:w-1/2 lg:w-1/3 xl:w-1/3 2xl:w-1/3 absolute md:left-40 left-10 top-20 z-10 bg-white shadow-lg rounded-lg p-4 ">
           <InputAutocomplete />
           <div className="overflow-scroll max-h-96 mt-5">
             {nearbyPlaces.map((x) => (
