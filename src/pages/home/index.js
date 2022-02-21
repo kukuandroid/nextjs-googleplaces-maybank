@@ -1,13 +1,32 @@
 import React from 'react'
 import styled from 'styled-components'
-import Sidebar from '../../components/sidebar'
 import Maps from '../../components/map'
+import InputAutocomplete from '../../components/input-autocomplete'
+import PlaceCard from '../../components/place-card'
+import { useSelector } from 'react-redux'
+import useGetCoordinates from '../../hooks/geolocation'
 
 const HomePage = () => {
+  const { nearbyPlaces = [] } = useSelector((state) => state.nearbyPlaces)
+  const [coords, loading] = useGetCoordinates()
+  if (loading) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        <p >Fetching your location ...</p>
+      </div>
+    )
+  }
   return (
     <Container>
       <Wrapper>
-        <Sidebar />
+        <div className="w-1/3 absolute left-20 top-20 z-10 bg-white shadow-lg rounded-lg p-4">
+          <InputAutocomplete />
+          <div className="overflow-scroll max-h-96 mt-5">
+            {nearbyPlaces.map((x) => (
+              <PlaceCard key={x.place_id} {...x} />
+            ))}
+          </div>
+        </div>
         <Maps />
       </Wrapper>
     </Container>
@@ -23,7 +42,7 @@ const Container = styled.div`
   right: 0;
 `
 const Wrapper = styled.div`
-background-image: url('https://cdn.dribbble.com/users/3956332/screenshots/15579019/media/f6442ca3d9682b438f7dbb4adca59c19.jpg?compress=1&resize=1600x1200');
+  background-image: url("https://cdn.dribbble.com/users/3956332/screenshots/15579019/media/f6442ca3d9682b438f7dbb4adca59c19.jpg?compress=1&resize=1600x1200");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
